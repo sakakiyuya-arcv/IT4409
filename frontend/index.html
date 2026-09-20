@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm tra kết nối Server</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+        button:hover { background-color: #45a049; }
+        button:disabled { background-color: #cccccc; cursor: not-allowed; }
+        
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            display: none;
+            text-align: left;
+            font-size: 14px;
+        }
+        .status-dot {
+            height: 12px; width: 12px; border-radius: 50%; display: inline-block;
+            background-color: #ccc; margin-right: 8px;
+        }
+        .online { background-color: #4CAF50; }
+        .offline { background-color: #f44336; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Trạng thái Máy Chủ</h2>
+        <p>Nhấn nút bên dưới để gọi API đến server trên Render của bạn.</p>
+        
+        <div style="margin-bottom: 20px; font-weight: bold;">
+            <span class="status-dot" id="indicator"></span>
+            <span id="statusText">Chưa kết nối</span>
+        </div>
+
+        <button id="checkBtn" onclick="checkServer()">Kiểm tra Server</button>
+
+        <div id="result">
+            <strong>Phản hồi từ Server:</strong>
+            <pre id="jsonData" style="white-space: pre-wrap; word-wrap: break-word;"></pre>
+        </div>
+    </div>
+
+    <script>
+        // QUAN TRỌNG: Thay thế URL dưới đây bằng URL Backend trên Render của bạn
+        // Ví dụ: "https://my-backend-test-123.onrender.com/api/status"
+        const API_URL = "DÁN_LINK_BACKEND_CỦA_BẠN_Ở_ĐÂY/api/status";
+
+        async function checkServer() {
+            const btn = document.getElementById('checkBtn');
+            const resultDiv = document.getElementById('result');
+            const jsonData = document.getElementById('jsonData');
+            const indicator = document.getElementById('indicator');
+            const statusText = document.getElementById('statusText');
+
+            btn.disabled = true;
+            btn.innerText = "Đang kết nối...";
+            indicator.className = "status-dot";
+            statusText.innerText = "Đang chờ phản hồi... (Có thể mất 30s-50s nếu server đang 'ngủ')";
+            
+            try {
+                // Thực hiện gọi API
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                
+                // Hiển thị kết quả thành công
+                indicator.className = "status-dot online";
+                statusText.innerText = "Đã kết nối thành công!";
+                statusText.style.color = "#4CAF50";
+                
+                resultDiv.style.display = "block";
+                jsonData.innerText = JSON.stringify(data, null, 2);
+
+            } catch (error) {
+                // Xử lý khi lỗi hoặc không tìm thấy server
+                indicator.className = "status-dot offline";
+                statusText.innerText = "Lỗi kết nối / Server offline";
+                statusText.style.color = "#f44336";
+                
+                resultDiv.style.display = "block";
+                jsonData.innerText = "Không thể kết nối. Hãy kiểm tra lại link API_URL hoặc xem logs trên Render.\n\nChi tiết lỗi: " + error.message;
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Kiểm tra lại";
+            }
+        }
+    </script>
+</body>
+</html>
