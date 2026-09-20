@@ -16,114 +16,39 @@
         }
         .card {
             background: white;
-            padding: 30px;
+            padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             text-align: center;
-            max-width: 450px;
+            max-width: 500px;
             width: 100%;
         }
         .author-badge {
             background-color: #e3f2fd;
             color: #1976d2;
-            padding: 5px 15px;
+            padding: 8px 20px;
             border-radius: 20px;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
             display: inline-block;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 12px 24px;
+        h1 {
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+        }
+        p {
+            color: #666;
             font-size: 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 20px;
         }
-        button:hover { background-color: #45a049; }
-        button:disabled { background-color: #cccccc; cursor: not-allowed; }
-        
-        #result {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 6px;
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            display: none;
-            text-align: left;
-            font-size: 14px;
-        }
-        .status-dot {
-            height: 12px; width: 12px; border-radius: 50%; display: inline-block;
-            background-color: #ccc; margin-right: 8px;
-        }
-        .online { background-color: #4CAF50; }
-        .offline { background-color: #f44336; }
     </style>
 </head>
 <body>
 
     <div class="card">
         <div class="author-badge">Sinh viên: Nguyễn Hoàng Long</div>
-        <h2>Hệ thống máy chủ IT4409</h2>
-        <p>Nhấn nút bên dưới để kiểm tra kết nối API tới Backend.</p>
-        
-        <div style="margin-bottom: 20px; font-weight: bold;">
-            <span class="status-dot" id="indicator"></span>
-            <span id="statusText">Chưa kết nối</span>
-        </div>
-
-        <button id="checkBtn" onclick="checkServer()">Kiểm tra Server</button>
-
-        <div id="result">
-            <strong>Phản hồi từ Server Backend:</strong>
-            <pre id="jsonData" style="white-space: pre-wrap; word-wrap: break-word;"></pre>
-        </div>
+        <h1>Chào mừng đến với web của tôi!</h1>
     </div>
 
-    <script>
-        // QUAN TRỌNG: Hãy đảm bảo biến API_URL bên dưới ĐÚNG với link backend của bạn.
-        // Ví dụ: const API_URL = "https://it4409-backend.onrender.com/api/status";
-        const API_URL = "https://it4409-33o4.onrender.com/api/status";
-
-        async function checkServer() {
-            const btn = document.getElementById('checkBtn');
-            const resultDiv = document.getElementById('result');
-            const jsonData = document.getElementById('jsonData');
-            const indicator = document.getElementById('indicator');
-            const statusText = document.getElementById('statusText');
-
-            btn.disabled = true;
-            btn.innerText = "Đang kết nối...";
-            indicator.className = "status-dot";
-            statusText.innerText = "Đang chờ phản hồi... (Vui lòng đợi)";
-            
-            try {
-                const response = await fetch(API_URL);
-                const data = await response.json();
-                
-                indicator.className = "status-dot online";
-                statusText.innerText = "Đã kết nối thành công!";
-                statusText.style.color = "#4CAF50";
-                
-                resultDiv.style.display = "block";
-                jsonData.innerText = JSON.stringify(data, null, 2);
-            } catch (error) {
-                indicator.className = "status-dot offline";
-                statusText.innerText = "Lỗi kết nối / Server offline";
-                statusText.style.color = "#f44336";
-                
-                resultDiv.style.display = "block";
-                jsonData.innerText = "Không thể kết nối. Chi tiết lỗi: " + error.message;
-            } finally {
-                btn.disabled = false;
-                btn.innerText = "Kiểm tra lại";
-            }
-        }
-    </script>
 </body>
 </html>
