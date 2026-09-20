@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kiểm tra kết nối Server</title>
+    <title>Web của Nguyễn Hoàng Long</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -20,8 +20,18 @@
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             text-align: center;
-            max-width: 400px;
+            max-width: 450px;
             width: 100%;
+        }
+        .author-badge {
+            background-color: #e3f2fd;
+            color: #1976d2;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
         }
         button {
             background-color: #4CAF50;
@@ -58,8 +68,9 @@
 <body>
 
     <div class="card">
-        <h2>Trạng thái Máy Chủ</h2>
-        <p>Nhấn nút bên dưới để gọi API đến server trên Render của bạn.</p>
+        <div class="author-badge">Sinh viên: Nguyễn Hoàng Long</div>
+        <h2>Hệ thống máy chủ IT4409</h2>
+        <p>Nhấn nút bên dưới để kiểm tra kết nối API tới Backend.</p>
         
         <div style="margin-bottom: 20px; font-weight: bold;">
             <span class="status-dot" id="indicator"></span>
@@ -69,14 +80,14 @@
         <button id="checkBtn" onclick="checkServer()">Kiểm tra Server</button>
 
         <div id="result">
-            <strong>Phản hồi từ Server:</strong>
+            <strong>Phản hồi từ Server Backend:</strong>
             <pre id="jsonData" style="white-space: pre-wrap; word-wrap: break-word;"></pre>
         </div>
     </div>
 
     <script>
-        // QUAN TRỌNG: Thay thế URL dưới đây bằng URL Backend trên Render của bạn
-        // Ví dụ: "https://my-backend-test-123.onrender.com/api/status"
+        // QUAN TRỌNG: Hãy đảm bảo biến API_URL bên dưới ĐÚNG với link backend của bạn.
+        // Ví dụ: const API_URL = "https://it4409-backend.onrender.com/api/status";
         const API_URL = "https://it4409-33o4.onrender.com/api/status";
 
         async function checkServer() {
@@ -89,29 +100,25 @@
             btn.disabled = true;
             btn.innerText = "Đang kết nối...";
             indicator.className = "status-dot";
-            statusText.innerText = "Đang chờ phản hồi... (Có thể mất 30s-50s nếu server đang 'ngủ')";
+            statusText.innerText = "Đang chờ phản hồi... (Vui lòng đợi)";
             
             try {
-                // Thực hiện gọi API
                 const response = await fetch(API_URL);
                 const data = await response.json();
                 
-                // Hiển thị kết quả thành công
                 indicator.className = "status-dot online";
                 statusText.innerText = "Đã kết nối thành công!";
                 statusText.style.color = "#4CAF50";
                 
                 resultDiv.style.display = "block";
                 jsonData.innerText = JSON.stringify(data, null, 2);
-
             } catch (error) {
-                // Xử lý khi lỗi hoặc không tìm thấy server
                 indicator.className = "status-dot offline";
                 statusText.innerText = "Lỗi kết nối / Server offline";
                 statusText.style.color = "#f44336";
                 
                 resultDiv.style.display = "block";
-                jsonData.innerText = "Không thể kết nối. Hãy kiểm tra lại link API_URL hoặc xem logs trên Render.\n\nChi tiết lỗi: " + error.message;
+                jsonData.innerText = "Không thể kết nối. Chi tiết lỗi: " + error.message;
             } finally {
                 btn.disabled = false;
                 btn.innerText = "Kiểm tra lại";
