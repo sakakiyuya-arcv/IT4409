@@ -1,0 +1,279 @@
+/* =====================================================================
+   BLAKLETTERPRESS - STYLESHEET 
+   ===================================================================== */
+
+/* 1. Biến màu sắc & Thiết lập chung (Reset) */
+:root {
+    --primary-color: #2b2b2b;
+    --secondary-color: #c0392b;
+    --bg-color: #f4f1ea;
+    --card-bg: #ffffff;
+    --text-color: #333333;
+    --text-light: #cfcfcf;
+    --border-color: #e0d8c8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+h1, h2, h3 {
+    color: var(--primary-color);
+    margin-bottom: 16px;
+}
+
+/* 2. Header & Điều hướng (Sticky) */
+.site-header {
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 16px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.site-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.tagline {
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.main-nav a:hover {
+    color: var(--secondary-color);
+}
+
+/* 3. Bố cục chính (Mobile: 1 cột) */
+.layout {
+    max-width: 1440px; 
+    margin: 32px auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+}
+
+/* 4. Các Section Nội dung */
+main article, 
+main section {
+    background-color: var(--card-bg);
+    padding: 32px;
+    border-radius: 12px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+}
+
+#gioi-thieu figure {
+    margin: 24px 0;
+}
+
+/* Ép ảnh giới thiệu xưởng in giãn đầy chiều ngang */
+#gioi-thieu figure img {
+    width: 100%;
+}
+
+#gioi-thieu figcaption {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+#gioi-thieu p {
+    margin-bottom: 16px;
+}
+
+/* 5. Lưới Grid tự động cho Giá trị & Đội ngũ */
+.value-list, 
+.team-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+}
+
+.value-card, 
+.member {
+    background-color: var(--bg-color);
+    padding: 24px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+/* Ảnh đội ngũ: Lấp đầy khung, ưu tiên giữ phần đỉnh đầu */
+.member img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 16px;
+}
+
+/* 6. Form Liên hệ (Ép xếp dọc 100%) */
+.contact-form p {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+.contact-form label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.contact-form input, 
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+}
+
+.contact-form button {
+    background-color: var(--secondary-color);
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
+}
+
+.contact-form button:hover {
+    background-color: #a5281b;
+}
+
+/* 7. Sidebar (Bài viết gần đây) */
+.sidebar {
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 32px;
+    border-radius: 12px;
+    height: max-content;
+}
+
+.sidebar h2 {
+    color: #fff;
+}
+
+.recent {
+    list-style: none;
+    margin-bottom: 24px;
+}
+
+.recent li {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.recent a:hover, 
+.sidebar p a {
+    color: var(--secondary-color);
+}
+
+/* 8. Footer */
+.site-footer {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 48px 0 24px; 
+    margin-top: 48px;
+}
+
+.footer-cols {
+    max-width: 1440px; 
+    margin: 0 auto 32px;
+    padding: 0 24px; 
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile mặc định 1 cột dọc */
+    gap: 32px;
+    text-align: left;
+}
+
+.footer-cols h3 {
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* =====================================================================
+   MEDIA QUERIES (Thiết bị màn hình lớn)
+   ===================================================================== */
+
+/* Tablet và PC: Footer chia 2 cột. 
+   1fr lấy hết khoảng trống giữa, max-content đẩy cột phải sát lề và chống rớt dòng */
+@media screen and (min-width: 600px) {
+    .footer-cols {
+        grid-template-columns: 1fr max-content; 
+        gap: 48px;
+    }
+}
+
+/* PC / Desktop (Từ 900px trở lên) */
+@media screen and (min-width: 900px) {
+    .site-header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .site-header .tagline {
+        display: none;
+    }
+
+    /* Bố cục chính: Cột nội dung (1fr) và Sidebar (250px) */
+    .layout {
+        grid-template-columns: 1fr 250px; 
+    }
+}
