@@ -19,7 +19,7 @@ class GioHang {
 
 	// 1. Thêm sản phẩm; trả về true nếu thêm được, false nếu soLuong không hợp lệ.
 	them(sanPham, soLuong) {
-        const sl = Number(soLuong);
+        const sl = soLuong;
         if (!Number.isInteger(sl) || sl <= 0) return false;
         
         const dongHienTai = this.dsDong.find(dong => dong.id === sanPham.id);
