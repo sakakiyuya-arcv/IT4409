@@ -19,43 +19,76 @@ class GioHang {
 
 	// 1. Thêm sản phẩm; trả về true nếu thêm được, false nếu soLuong không hợp lệ.
 	them(sanPham, soLuong) {
-		// TODO
+        const sl = Number(soLuong);
+        if (!Number.isInteger(sl) || sl <= 0) return false;
+        
+        const dongHienTai = this.dsDong.find(dong => dong.id === sanPham.id);
+        
+        if (dongHienTai) {
+            dongHienTai.soLuong += sl; 
+        } else {
+            this.dsDong.push({ ...sanPham, soLuong: sl });
+        }
+        return true;
 	}
 
 	// 2. Xoá dòng có id tương ứng; trả về true nếu có xoá, false nếu không tìm thấy.
 	xoa(id) {
-		// TODO
+        const viTri = this.dsDong.findIndex(dong => dong.id === id);
+        if (viTri !== -1) {
+            this.dsDong.splice(viTri, 1);
+            return true;
+        }
+        return false;
 	}
 
 	// 3. Tổng tiền cả giỏ.
 	tongTien() {
-		// TODO
+        return this.dsDong.reduce((tong, dong) => tong + (dong.gia * dong.soLuong), 0);
 	}
 
 	// 4. Object thống kê: { "<loai>": tổng tiền của loại đó, ... }.
 	thongKeTheoLoai() {
-		// TODO
+        return this.dsDong.reduce((thongKe, dong) => {
+            const thanhTienD = dong.gia * dong.soLuong;
+            thongKe[dong.loai] = (thongKe[dong.loai] || 0) + thanhTienD;
+            return thongKe;
+        }, {});
 	}
 
 	// 5. Dòng có thành tiền lớn nhất (bản sao, có thêm thanhTien); null nếu giỏ rỗng.
 	dongDatNhat() {
-		// TODO
+        if (this.dsDong.length === 0) return null;
+        const mangBanSao = this.layDanhSach(); 
+        return mangBanSao.reduce((max, dong) => dong.thanhTien > max.thanhTien ? dong : max);
 	}
 
 	// 6. Mảng BẢN SAO các dòng, mỗi dòng có thêm thuộc tính thanhTien.
 	layDanhSach() {
-		// TODO
+        return this.dsDong.map(dong => ({
+            ...dong, 
+            thanhTien: dong.gia * dong.soLuong 
+        }));
 	}
 
 	// 7. Chuỗi JSON của mảng các dòng.
 	xuatJSON() {
-		// TODO
+        return JSON.stringify(this.dsDong);
 	}
 }
 
 // 8. Tạo lại một GioHang từ chuỗi JSON do xuatJSON() sinh ra.
 function napGioHang(chuoiJSON) {
-	// TODO
+    const gioMoi = new GioHang();
+    try {
+        const dataParsed = JSON.parse(chuoiJSON);
+        if (Array.isArray(dataParsed)) {
+            gioMoi.dsDong = dataParsed.map(dong => ({...dong}));
+        }
+    } catch (e) {
+        // Bỏ qua lỗi
+    }
+    return gioMoi;
 }
 
 // ---------- CHẠY THỬ (không sửa) ----------
