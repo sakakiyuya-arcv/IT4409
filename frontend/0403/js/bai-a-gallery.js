@@ -89,4 +89,4 @@ mucMoi.append(tieuDe);
 dsBaiViet.prepend(mucMoi);
 
 // Trên trang, hai chữ "thiệp cưới" hiện IN ĐẬM hay hiện NGUYÊN cả cặp thẻ <b>…</b>?  → NGUYÊN
-console.log(dsBaiViet.querySelectorAll("li").length);     // in ra: 4
+console.log(dsBaiViet.querySelectorAll("li").length);     // in ra: 3
