@@ -86,7 +86,10 @@
 
             React.useEffect(() => {
                 if (user) {
-                    setUsers((prev) => [...prev, { ...user, id: prev.length + 1 }]);
+                    setUsers((prev) => {
+                        const nextId = prev.length > 0 ? Math.max(...prev.map((u) => u.id)) + 1 : 1;
+                        return [...prev, { ...user, id: nextId }];
+                    });
                     onAdded();
                 }
             }, [user]);
